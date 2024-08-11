@@ -4,11 +4,12 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": "./",
     "paths": {
-      "*": ["*", "graphql/*", "test/*"],
+      "*": ["*", "graphql/*", "test/*", "src/*"],
       "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"],
       "react-loading-overlay": ["./types/react-loading-overlay"]
     },
     "allowJs": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,

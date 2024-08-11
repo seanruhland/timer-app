@@ -1,10 +1,9 @@
 import React from 'react';
+import { Container } from './Container.tsx';
 
  const RadialTimer = () => {
 	return (
-		<div>
-			<p>Hello World</p>
-			</div>
+		<Container/>
 	);
 };
 export default RadialTimer;

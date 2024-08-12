@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header.tsx';
-import  TimerBody from './TimerBody.tsx';
+import TimerBody from './TimerBody.tsx';
 
 export const Timer = ({ setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> }) => {
   return (
@@ -11,7 +11,6 @@ export const Timer = ({ setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolea
     </TimerContainer>
   );
 };
-
 
 const TimerContainer = styled.div`
   width: 22vw;

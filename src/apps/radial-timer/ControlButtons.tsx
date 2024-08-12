@@ -1,22 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { FiPlay, FiPause } from 'react-icons/fi'; // Icon imports
+import { useTimerContext } from './TimerContext.tsx';
 
-interface CountdownInputProps {
-  isRunning: boolean;
-  setProgress: Dispatch<SetStateAction<number>>;
-  setTotalTime: Dispatch<SetStateAction<number>>;
-  setTime: Dispatch<SetStateAction<number>>;
-  setIsRunning: Dispatch<SetStateAction<boolean>>;
-}
+const ControlButtons = () => {
+  const { isRunning, time, totalTime, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
 
-const ControlButtons = ({
-  isRunning,
-  setProgress,
-  setTotalTime,
-  setTime,
-  setIsRunning,
-}: CountdownInputProps) => {
   const handleStartPause = () => {
     setIsRunning(!isRunning);
   };

@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import CountDownInput from './CountDownInput.tsx';
 import ControlButtons from './ControlButtons.tsx';
+import { useTimerContext, TimerContextProvider } from './TimerContext.tsx';
 import { updateCanvas } from './Utils.ts';
 
 const TimerBody = () => {
-  const [isRunning, setIsRunning] = useState(false);
-  const [time, setTime] = useState(60); // time in seconds
-  const [progress, setProgress] = useState(100); // progress in percentage
-  const [totalTime, setTotalTime] = useState(60); // total time in seconds
-
+  const { progress } = useTimerContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameId = useRef<number>();
 
@@ -24,25 +21,11 @@ const TimerBody = () => {
   }, [progress]);
 
   return (
-    <>
+    <TimerContextProvider>
       <TimerCanvas ref={canvasRef} width={200} height={200} />
-      <CountDownInput
-        isRunning={isRunning}
-        time={time}
-        totalTime={totalTime}
-        setIsRunning={setIsRunning}
-        setProgress={setProgress}
-        setTotalTime={setTotalTime}
-        setTime={setTime}
-      />
-      <ControlButtons
-        isRunning={isRunning}
-        setIsRunning={setIsRunning}
-        setProgress={setProgress}
-        setTotalTime={setTotalTime}
-        setTime={setTime}
-      />
-    </>
+      <CountDownInput />
+      <ControlButtons />
+    </TimerContextProvider>
   );
 };
 

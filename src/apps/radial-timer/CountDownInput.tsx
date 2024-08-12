@@ -1,27 +1,13 @@
 import React, { useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { formatTime } from './Utils.ts';
+import { useTimerContext } from './TimerContext.tsx';
 
-interface CountdownInputProps {
-  isRunning: boolean;
-  time: number;
-  totalTime: number;
-  setProgress: Dispatch<SetStateAction<number>>;
-  setTotalTime: Dispatch<SetStateAction<number>>;
-  setTime: Dispatch<SetStateAction<number>>;
-  setIsRunning: Dispatch<SetStateAction<boolean>>;
-}
-
-const CountdownInput = ({
-  isRunning,
-  time,
-  totalTime,
-  setIsRunning,
-  setProgress,
-  setTotalTime,
-  setTime,
-}: CountdownInputProps) => {
+const CountdownInput = () => {
+  const { isRunning,  time, totalTime, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
   const inputRef = useRef<HTMLInputElement>(null);
+  console.log('time', time);
+  console.log('totalTime', totalTime);
 
   useEffect(() => {
     if (isRunning) {
@@ -89,7 +75,7 @@ const CountdownInput = ({
   return (
     <div>
       <TimeDisplay
-        type="time"
+        type="text"
         value={formatTime(time)}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
@@ -106,7 +92,7 @@ export default CountdownInput;
 const TimeDisplay = styled.input`
   position: absolute;
   top: 50%;
-  left: 51%;
+  left: 50%;
   transform: translate(-50%, -50%);
   color: white;
   font-size: 28px;
@@ -114,7 +100,7 @@ const TimeDisplay = styled.input`
   background: transparent;
   border: none;
   z-index: 2;
-  width: 130px;
+  width: 100px;
   &:focus {
     outline: none;
   }

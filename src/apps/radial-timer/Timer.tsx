@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import Header from './Header.tsx';
 import TimerBody from './TimerBody.tsx';
 import { TimerContextProvider } from './TimerContext.tsx';
+
 export const Timer = ({ setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> }) => {
   return (
-    <TimerContainer>
+    <TimerContainer data-testid="timer-container">
       <Header setIsOpen={setIsOpen} />
       <TimerContextProvider>
         <TimerBody />

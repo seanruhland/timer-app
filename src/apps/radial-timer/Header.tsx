@@ -7,7 +7,7 @@ const Header = ({ setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> })
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer data-testid="header">
       <h2>Radial Timer</h2>
       <button onClick={handleButtonClick}>×</button>
     </HeaderContainer>

@@ -1,10 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { FiPlay, FiPause } from 'react-icons/fi'; // Icon imports
 import { useTimerContext } from './TimerContext.tsx';
 
 const ControlButtons = () => {
-  const { isRunning, time, totalTime, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
+  const { isRunning, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
 
   const handleStartPause = () => {
     setIsRunning(!isRunning);
@@ -26,7 +26,13 @@ const ControlButtons = () => {
   return (
     <Controls>
       <ControlButton onClick={handleAddMinute}>+1:00</ControlButton>
-      <IconButton onClick={handleStartPause}>{isRunning ? <FiPause size={24} /> : <FiPlay size={24} />}</IconButton>
+      <IconButton onClick={handleStartPause}>
+        {isRunning ? (
+          <FiPause data-testid="start-buttons" size={24} />
+        ) : (
+          <FiPlay data-testid="start-buttons" size={24} />
+        )}
+      </IconButton>
       <ControlButton onClick={handleReset}>Reset</ControlButton>
     </Controls>
   );

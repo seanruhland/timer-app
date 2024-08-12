@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers';
-import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import { useTimerContext } from './TimerContext.tsx';
 
 const TimePickerInput = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const { isRunning, time, totalTime, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { isRunning, time, totalTime, setProgress, setTotalTime, setTime } = useTimerContext();
 
   useEffect(() => {
     if (isRunning) {
@@ -36,19 +35,20 @@ const TimePickerInput = () => {
   };
 
   return (
-    <TimeDisplay>
-      <TimePicker
-        ampmInClock
-        views={['minutes', 'seconds']}
-        onChange={handleInputChange}
-        value={dayjs()
-          .set('hour', 0)
-          .set('minute', Math.floor(time / 60))
-          .set('second', time % 60)}
-        disableOpenPicker
-      />
-      <EditingMessage>{isEditing && <span>Enter Time In Seconds</span>}</EditingMessage>
-    </TimeDisplay>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <TimeDisplay data-testid="time-picker">
+        <TimePicker
+          ampmInClock
+          views={['minutes', 'seconds']}
+          onChange={handleInputChange}
+          value={dayjs()
+            .set('hour', 0)
+            .set('minute', Math.floor(time / 60))
+            .set('second', time % 60)}
+          disableOpenPicker
+        />
+      </TimeDisplay>
+    </LocalizationProvider>
   );
 };
 
@@ -90,21 +90,4 @@ const TimeDisplay = styled.div`
     text-align: center;
     font-size: 1.5rem;
   }
-`;
-
-const CustomTextField = styled(TextField)`
-
-`;
-
-const EditingMessage = styled.div`
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, 50%);
-  color: white;
-  font-size: 1rem;
-  text-align: center;
-  background: transparent;
-  z-index: 2;
-  width: 100px;
 `;

@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Timer } from './Timer.tsx';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 
 const RadialTimer = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <ViewWrapper>
-        {isOpen ? <Timer setIsOpen={setIsOpen} /> : <OpenButton onClick={() => setIsOpen(true)}>Start Timing</OpenButton>}
-      </ViewWrapper>
-    </LocalizationProvider>
+    <ViewWrapper>
+      {isOpen ? <Timer setIsOpen={setIsOpen} /> : <OpenButton onClick={() => setIsOpen(true)}>Start Timing</OpenButton>}
+    </ViewWrapper>
   );
 };
 export default RadialTimer;

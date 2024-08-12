@@ -16,7 +16,9 @@
     "react-icons": "^5.2.1",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.12",
-    "web-vitals": "^2.1.4"
+    "typescript": "^4.9.5",
+    "@typescript-eslint/parser": "^5.x.x",
+    "@typescript-eslint/eslint-plugin": "^5.x.x"
   },
   "scripts": {
     "start": "react-scripts start",

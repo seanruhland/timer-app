@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
-import { Header } from './Header.tsx';
-import { TimerBody } from './TimerBody.tsx';
+import { Timer } from './Timer.tsx';
 
-const RadialTimer = () => {
-  const [isRunning, setIsRunning] = useState(false);
-  return (
-    <ViewWrapper>
-      <TimerContainer>
-        <Header setIsRunning={setIsRunning} />
-        <TimerBody isRunning={isRunning} setIsRunning={setIsRunning} />
-      </TimerContainer>
-    </ViewWrapper>
-  );
+ const RadialTimer = () => {
+	const [isOpen, setIsOpen] = useState(false);
+	return (
+			<ViewWrapper>
+			{isOpen ? (
+				<Timer setIsOpen ={setIsOpen}/>
+			) : (
+				<OpenButton onClick={() => setIsOpen(true)}>Start Timing</OpenButton>
+			)}
+			</ViewWrapper>
+		);
 };
 export default RadialTimer;
+
 const ViewWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -24,17 +25,16 @@ const ViewWrapper = styled.div`
   background-color: #2f4858;
 `;
 
-const TimerContainer = styled.div`
-  width: 22vw;
-  height: 50vh;
-  background-color: #1d2c35;
-  overflow: hidden;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-`;
+const OpenButton = styled.button`
+	background-color: #263238;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	padding: 10px 20px;
+	font-size: 2.5rem;
+	margin: 0;
+	&:hover {
+		background-color: #37474f;
+	}
+`

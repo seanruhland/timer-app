@@ -1,27 +1,26 @@
 import React, { useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+import { formatTime } from './Utils.ts';
 
-const formatTime = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-};
-
-const CountdownInput = ({
-  isRunning,
-  time,
-  totalTime,
-  setProgress,
-  setTotalTime,
-  setTime,
-}: {
+interface CountdownInputProps {
   isRunning: boolean;
   time: number;
   totalTime: number;
   setProgress: Dispatch<SetStateAction<number>>;
   setTotalTime: Dispatch<SetStateAction<number>>;
   setTime: Dispatch<SetStateAction<number>>;
-}) => {
+  setIsRunning: Dispatch<SetStateAction<boolean>>;
+}
+
+const CountdownInput = ({
+  isRunning,
+  time,
+  totalTime,
+  setIsRunning,
+  setProgress,
+  setTotalTime,
+  setTime,
+}: CountdownInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -62,6 +61,11 @@ const CountdownInput = ({
       }
     }
 
+    if (e.key === 'Space') {
+      e.preventDefault();
+      setIsRunning(!isRunning);
+    }
+
     const adjustTime = (amount: number) => {
       setTime((prevTime) => {
         const newTime = Math.max(0, Math.min(600, prevTime + amount));
@@ -85,7 +89,7 @@ const CountdownInput = ({
   return (
     <div>
       <TimeDisplay
-        type="text"
+        type="time"
         value={formatTime(time)}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
@@ -102,7 +106,7 @@ export default CountdownInput;
 const TimeDisplay = styled.input`
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 51%;
   transform: translate(-50%, -50%);
   color: white;
   font-size: 28px;
@@ -110,9 +114,22 @@ const TimeDisplay = styled.input`
   background: transparent;
   border: none;
   z-index: 2;
-  width: 100px;
-
+  width: 130px;
   &:focus {
     outline: none;
+  }
+  &::-webkit-clear-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    margin: -10px;
+  }
+  &::-webkit-datetime-edit-ampm-field {
+    display: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    background: none;
   }
 `;

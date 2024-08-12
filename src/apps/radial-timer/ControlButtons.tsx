@@ -45,15 +45,15 @@ const ControlButton = styled.button`
   background-color: #263238;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 4px 8px;
   font-size: 16px;
   flex: 1;
-  margin: 0 5px;
+  margin: 0 6px;
 
   &:hover {
-    background-color: #37474f;
+    background-color: #2f4858;
   }
 `;
 
@@ -70,6 +70,6 @@ const IconButton = styled.button`
   align-items: center;
 
   &:hover {
-    background-color: #37474f;
+    background-color: #2f4858;
   }
 `;

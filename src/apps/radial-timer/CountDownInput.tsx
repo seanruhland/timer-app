@@ -1,20 +1,18 @@
-import React, { useEffect, useRef, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { formatTime } from './Utils.ts';
 import { useTimerContext } from './TimerContext.tsx';
 
 const CountdownInput = () => {
-  const { isRunning,  time, totalTime, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
+  const { isRunning, time, totalTime, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
   const inputRef = useRef<HTMLInputElement>(null);
-  console.log('time', time);
-  console.log('totalTime', totalTime);
 
   useEffect(() => {
     if (isRunning) {
       const interval = setInterval(() => {
         setTime((prev) => {
           if (prev > 0) {
-            setProgress(Math.round((time / totalTime) * 10000) / 100);
+            setProgress(Math.round(((prev-1) / totalTime) * 10000) / 100);
             return prev - 1;
           } else {
             clearInterval(interval);
@@ -26,18 +24,17 @@ const CountdownInput = () => {
     }
   }, [isRunning, time]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    console.log('value', value);
-    const [minutes, seconds] = value.split(':').map(Number);
+const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { value } = e.target;
+  const [minutes, seconds] = value.split(':').map(Number);
 
-    if (!isNaN(minutes) && !isNaN(seconds)) {
-      const totalSeconds = minutes * 60 + seconds;
-      setTotalTime(totalSeconds);
-      setTime(Math.max(0, Math.min(600, totalSeconds)));
-      setProgress(100);
-    }
-  };
+  if (!isNaN(minutes) && !isNaN(seconds)) {
+    const totalSeconds = minutes * 60 + seconds;
+    setTotalTime(totalSeconds);
+    setTime(Math.max(0, Math.min(600, totalSeconds)));
+    setProgress(100);
+  }
+};
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -47,7 +44,7 @@ const CountdownInput = () => {
       }
     }
 
-    if (e.key === 'Space') {
+    if (e.key === ' ') {
       e.preventDefault();
       setIsRunning(!isRunning);
     }
@@ -80,8 +77,9 @@ const CountdownInput = () => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         maxLength={5}
-        pattern="\d{2}:\d{2}"
+        pattern="\d{1,2}:\d{2}"
         ref={inputRef}
+        placeholder="MM:SS"
       />
     </div>
   );
@@ -93,9 +91,9 @@ const TimeDisplay = styled.input`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -90%);
   color: white;
-  font-size: 28px;
+  font-size: 2rem;
   text-align: center;
   background: transparent;
   border: none;

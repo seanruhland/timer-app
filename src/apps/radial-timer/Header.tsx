@@ -8,7 +8,7 @@ const Header = ({ setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> })
 
   return (
     <HeaderContainer>
-      <h3>Radial Timer</h3>
+      <h2>Radial Timer</h2>
       <button onClick={handleButtonClick}>×</button>
     </HeaderContainer>
   );
@@ -23,7 +23,7 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 10%;
   font-size: 0.75 rem;
-  padding: 10px;
+  padding: 16px;
   background-color: #2c5777;
   transform: translateY(-10px);
   button {

@@ -4,17 +4,14 @@ import React, {
   SetStateAction,
   useState,
   useContext,
-  useRef,
-  useEffect,
   useMemo,
 } from 'react';
-import { updateCanvas } from './Utils.ts';
 
 interface UseTimerInterface {
   isRunning: boolean;
+  progress: number;
   time: number;
   totalTime: number;
-  progress: number;
   setProgress: Dispatch<SetStateAction<number>>;
   setTotalTime: Dispatch<SetStateAction<number>>;
   setTime: Dispatch<SetStateAction<number>>;
@@ -27,19 +24,16 @@ export const useTimer = (): UseTimerInterface => {
   const [time, setTime] = useState(60); // time in seconds
   const [progress, setProgress] = useState(100); // progress in percentage
   const [totalTime, setTotalTime] = useState(60); // total time in seconds
-  console.log('time', time);
-  console.log('progress', progress);
-
 
   const value = useMemo(
     () => ({
       isRunning,
-      setIsRunning,
-      time,
-      setTime,
       progress,
-      setProgress,
+      time,
       totalTime,
+      setIsRunning,
+      setTime,
+      setProgress,
       setTotalTime,
     }),
     [isRunning, time, progress, totalTime],

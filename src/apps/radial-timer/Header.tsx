@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+import { MdClear } from 'react-icons/md';
 
 const Header = ({ setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> }) => {
   const handleButtonClick = () => {
@@ -9,7 +10,7 @@ const Header = ({ setIsOpen }: { setIsOpen: Dispatch<SetStateAction<boolean>> })
   return (
     <HeaderContainer data-testid="header">
       <h2>Radial Timer</h2>
-      <button onClick={handleButtonClick}>×</button>
+      <button onClick={handleButtonClick}><MdClear/></button>
     </HeaderContainer>
   );
 };

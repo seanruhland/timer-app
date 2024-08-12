@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { formatTime } from './Utils.ts';
 import { useTimerContext } from './TimerContext.tsx';
 
 const CountdownInput = () => {
+  const [isEditing, setIsEditing] = useState(false);
   const { isRunning, time, totalTime, setIsRunning, setProgress, setTotalTime, setTime } = useTimerContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -26,12 +27,14 @@ const CountdownInput = () => {
 
 const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { value } = e.target;
-  const [minutes, seconds] = value.split(':').map(Number);
+  console.log('value', value);
+  // const [minutes, seconds] = value.split(':').map(Number);
 
-  if (!isNaN(minutes) && !isNaN(seconds)) {
-    const totalSeconds = minutes * 60 + seconds;
-    setTotalTime(totalSeconds);
-    setTime(Math.max(0, Math.min(600, totalSeconds)));
+  console.log(!isNaN(+value));
+  if (!isNaN(+value)) {
+    // const totalSeconds = minutes * 60 + seconds;
+    setTotalTime(+value);
+    setTime(Math.max(0, Math.min(600, +value)));
     setProgress(100);
   }
 };
@@ -68,19 +71,30 @@ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       adjustTime(60); // Increase by 1 minute
     }
   };
-
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsEditing(true);
+  }
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsEditing(false);
+  }
   return (
     <div>
       <TimeDisplay
         type="text"
-        value={formatTime(time)}
+        value={isEditing ? time : formatTime(time)}
         onChange={handleInputChange}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         onKeyDown={handleKeyDown}
         maxLength={5}
         pattern="\d{1,2}:\d{2}"
         ref={inputRef}
         placeholder="MM:SS"
       />
+      <EditingMessage>
+      {isEditing && <span>Enter Time In Seconds</span>}
+
+      </EditingMessage>
     </div>
   );
 };
@@ -117,3 +131,17 @@ const TimeDisplay = styled.input`
     background: none;
   }
 `;
+
+const EditingMessage = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  background: transparent;
+  border: none;
+  z-index: 2;
+  width: 100px;
+`

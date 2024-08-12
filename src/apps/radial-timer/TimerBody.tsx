@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import CountDownInput from './CountDownInput.tsx';
+import TimePickerInput from './TimePickerInput.tsx';
 import ControlButtons from './ControlButtons.tsx';
 import { useTimerContext } from './TimerContext.tsx';
 import { updateCanvas } from './Utils.ts';
@@ -23,7 +23,7 @@ const TimerBody = () => {
   return (
     <>
       <TimerCanvas ref={canvasRef} width={200} height={200} />
-      <CountDownInput />
+      <TimePickerInput />
       <ControlButtons />
     </>
   );
